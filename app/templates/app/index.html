@@ -1,0 +1,61 @@
+{% load static %}
+<html>
+
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="todolist not-done">
+                 <h1>Todos</h1>
+                 <form action="{% url 'app:insert_todo' %}" method="POST">
+                     {% csrf_token %}
+                    <input name="todo_text" type="text" class="form-control add-todo" placeholder="Add todo"><br><br>
+                    <input type="submit" id="checkAll" class="btn btn-success" style="background-color: lightblue;" value="Add Todo"> <a style="margn-top:10px" class= "btn btn-success" href="{% url 'app:mark_all_complete' %}">Mark all as Done</a> 
+                    
+                     </form>  
+                        <hr>
+                        <ul id="sortable" class="list-unstyled">
+                       {% for item in not_done_items%}
+                       {% include 'app/todo_item_each.html' with item=item%}
+                       {% endfor %}
+                    </ul>
+                    <div class="todo-footer">
+                        <strong><span class="count-todos"></span></strong> Items Left
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="todolist">
+                 <h1>Already Done</h1>
+                    <ul id="done-items" class="list-unstyled">
+                        {% for item in done_items %}
+                        {% include 'app/done_item.html' with item=item %}
+
+                        {% endfor %}
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>   
+</body>
+
+
+
+</html>
+
+
+
+
